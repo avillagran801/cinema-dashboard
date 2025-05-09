@@ -1,8 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import ORJSONResponse
-import pandas as pd
-
+from routers import *
 app = FastAPI()
 
 # Allow frontend on localhost:3000 to access API
@@ -14,18 +12,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-try:
-  movies_df = pd.read_csv("TMDB_all_movies.zip")
-  movies_df = movies_df.replace([float("inf"), float("-inf")], None)  # Replace infinities with None
-  print("CSV loaded:", movies_df.shape)
-
-except Exception as e:
-  print("Failed to load CSV:", str(e))
-  movies_dataframe = pd.DataFrame()
-
-
-@app.get("/data", response_class=ORJSONResponse)
-def get_data():
-    if movies_df.empty:
-        raise HTTPException(status_code=500, detail="Data not loaded.")
-    return movies_df.head(200).to_dict(orient="records")
+# Add routes
+app.include_router(movies_router)
+app.include_router(genres_router)
