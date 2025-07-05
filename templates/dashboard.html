@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cinema Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Cinema Dashboard</h1>
+
+    <!-- SALES CHART SECTION -->
+    <div class="chart-section">
+      <!--
+        <form method="POST">
+            <input type="hidden" name="which_chart" value="sales">
+            <input type="hidden" name="current_profit" value="{{ region_profit }}">
+            <label>Sales Region:</label>
+            <select name="region_sales">
+                <option value="North" {% if region_sales == 'North' %}selected{% endif %}>North</option>
+                <option value="South" {% if region_sales == 'South' %}selected{% endif %}>South</option>
+            </select>
+            <button type="submit">Update Sales</button>
+        </form>
+        -->
+        {{ chart_test | safe }}
+    </div>
+    
+</div>
+</body>
+</html>
