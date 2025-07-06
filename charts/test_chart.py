@@ -4,10 +4,11 @@ from data.processor import get_movies_by_country
 def create_test_chart():
   df = get_movies_by_country()
 
-  fig = px.scatter_geo(df,
+  fig = px.choropleth(df,
                        locations="ISO_Alpha3",
                        hover_name="Country",
-                       size="Number of movies",
+                       color="Number of movies",
+                       color_continuous_scale=px.colors.sequential.Plasma,
                        title="Number of movies released by country"
                        )
   

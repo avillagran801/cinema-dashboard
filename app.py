@@ -11,7 +11,7 @@ def dashboard():
   chart_test = create_test_chart()
 
   return render_template("dashboard.html",
-                         chart_test=chart_test
+                         chart_test=chart_test,
                          )
 
 if __name__ == "__main__":

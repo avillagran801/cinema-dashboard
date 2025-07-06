@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Cinema Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- REQUIRED: Highcharts and Map modules -->
+    <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/data.js"></script>
+    <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
 </head>
 <body>
 <div class="container">
@@ -15,7 +21,7 @@
 
     <!-- SALES CHART SECTION -->
     <div class="chart-section">
-      <!--
+        <!--
         <form method="POST">
             <input type="hidden" name="which_chart" value="sales">
             <input type="hidden" name="current_profit" value="{{ region_profit }}">
@@ -28,6 +34,9 @@
         </form>
         -->
         {{ chart_test | safe }}
+    </div>
+
+    <div id="map-container">
     </div>
     
 </div>
