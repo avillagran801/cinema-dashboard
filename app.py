@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import plotly.express as px
-from charts.test_chart import create_test_chart
+from charts.choropleth_chart import create_choropleth
 
 app = Flask(__name__)
 
@@ -8,10 +8,10 @@ app = Flask(__name__)
 def dashboard():
   #chart = request.form.get("which_chart")
 
-  chart_test = create_test_chart()
+  choropleth_chart = create_choropleth()
 
   return render_template("dashboard.html",
-                         chart_test=chart_test,
+                         choropleth_chart=choropleth_chart,
                          )
 
 if __name__ == "__main__":
