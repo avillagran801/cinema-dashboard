@@ -12,7 +12,7 @@ def create_choropleth():
     color_continuous_scale=px.colors.sequential.Sunsetdark,
     # title="Number of Movies Produced by Country",
     projection="natural earth",
-    labels={"Number of movies": "Movies Released"},
+    labels={"Number of movies": "Movies Produced"},
   )
 
   fig.update_geos(

@@ -146,4 +146,11 @@ body {
 .dialog-message {
   color: #555;
   line-height: 1.5;
+  text-align: justify;
+}
+
+.dialog-message a {
+  color: #6096ba;
+  text-decoration: none;
+  font-weight: bold;
 }

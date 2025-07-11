@@ -23,13 +23,13 @@
             </h3>
             <button
               class="info-button"
-              onClick="showInfoDialog(
+              onclick="showInfoDialog(
                 'Information', 
-                'This is the dialog for chart 1'
+                'This choropleth map shows the number of movies produced by each country found on the October, 2024 version of '+
+                '<a href=\'https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates\' target=\'_blank\'>The Ultimate 1Million Movies Dataset (TMDB + IMDb)</a>'+
+                '.<br><br> Countries with no known data are displayed as gray.'
               )"
-            >
-              i
-            </button>
+            >i</button>
           </div>
           <div class="chart-content">
             {{ choropleth_chart | safe }}
@@ -39,7 +39,7 @@
         <div class="chart-container">
           <div class="chart-header">
             <h3 class="chart-title">
-              Number of Movies Produced By Country
+              Number of Movies Produced By Year
             </h3>
             <button
               class="info-button"
@@ -78,7 +78,7 @@
       <div class="dialog-content">
         <button class="close-button" onClick="hideInfoDialog()">&times;</button>
         <h2 id="dialogTitle" class="dialog-title">Title</h2>
-        <p id="dialogMessage" class="dialog-message">Message goes here</p>
+        <div id="dialogMessage" class="dialog-message">Message goes here</div>
       </div>
     </div>
 
@@ -86,7 +86,7 @@
       // Function to show the dialog with custom content
       function showInfoDialog(title, message) {
         document.getElementById('dialogTitle').textContent = title;
-        document.getElementById('dialogMessage').textContent = message;
+        document.getElementById('dialogMessage').innerHTML = message;
         document.getElementById('infoDialog').style.display = 'flex';
       }
       
