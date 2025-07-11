@@ -3,6 +3,7 @@ import plotly.io as pio
 from data.bar_data import people_in_movies
 
 def create_top10_actors_bar():
+    return
     df = people_in_movies.copy()
     df['cast'] = df['cast'].fillna('')
 
