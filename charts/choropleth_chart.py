@@ -9,14 +9,14 @@ def create_choropleth():
     hover_name="Country",
     hover_data={"ISO_Alpha3": False},
     color="Number of movies",
-    color_continuous_scale="Viridis",
-    title="Number of Movies Released by Country",
+    color_continuous_scale=px.colors.sequential.Sunsetdark,
+    # title="Number of Movies Produced by Country",
     projection="natural earth",
-    labels={"Number of movies": "Movies Released"},
+    labels={"Number of movies": "Movies Produced"},
   )
 
   fig.update_geos(
-    resolution=50,  # Lower resolution (50 or 110 for crude maps)
+    resolution=110,  # Lower resolution (50 or 110 for crude maps)
     scope="world",  # Avoid loading unused regions
     showsubunits=False  # Hide states/provinces
   )
@@ -27,25 +27,26 @@ def create_choropleth():
   )
   
   fig.update_layout(
-      height=500,
-      margin={"r": 0, "t": 40, "l": 0, "b": 0},
+      height=400,
+      margin={"r": 2, "t": 0, "l": 2, "b": 0},
       geo=dict(
         showframe=True,          
         showcountries=True,       
         countrycolor="white",    
         countrywidth=1,         
         showcoastlines=False,     
-        bgcolor="rgba(0,0,0,0)",
+        #bgcolor="#f4f4f4",
+        bgcolor="white",
         landcolor="lightgray",    # Fill color for non-data countries
       ),
       coloraxis_colorbar=dict(
         title="Movies Released",
         thickness=15,           
-        len=0.6,                
+        len=0.8,                
       ),
       font=dict(
         family="Arial",
-        color="black"
+        color="#1a1a1a"
       ),
       hoverlabel=dict(
         bgcolor="white",
