@@ -2,8 +2,9 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    padding: 1rem;
+    /*padding: 1rem;*/
 }
+
 
 .header-container {
   position: relative;
@@ -50,6 +51,7 @@ body {
   grid-template-rows: repeat(3, 1fr);
   column-gap: 1rem;
   row-gap: 1rem;
+  margin: 1.5rem;
 }
 
 @media (max-width: 1024px) {
@@ -59,7 +61,89 @@ body {
   }
 }
 
-
 .chart-container {
   display: block;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 0rem 1.5rem;
+  background-color: white;
+}
+
+.chart-title {
+  flex: 1;
+  font-size: 1.2rem;
+  color: #1a1a1a;
+  /*font-weight: 600;*/
+}
+
+.chart-content {
+  padding: 0rem 1rem;
+  background-color: white;
+}
+
+.info-button {
+  background-color: #6096ba;
+  border: none;
+  color: white;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 50%;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.dialog-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 80%;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+}
+
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #666;
+}
+
+.dialog-title {
+  margin-top: 0;
+  color: #333;
+}
+
+.dialog-message {
+  color: #555;
+  line-height: 1.5;
 }

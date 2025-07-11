@@ -1,56 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Cinema Dashboard</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <head>
+    <meta charset="UTF-8">
+    <title>Cinema Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <div class="header-container">
+        <div class="header-border">
+          <h2 class="header-title">
+            CineMetrics – Data-Driven Cinema Insights
+          </h2>
+        </div>
+      </div>
 
-  <!-- REQUIRED: Highcharts and Map modules -->
-  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
-  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-  <script src="https://code.highcharts.com/maps/modules/data.js"></script>
-  <script src="https://code.highcharts.com/mapdata/custom/world.js"></script>
-</head>
-<body>
-<div class="container">
-  <div class="header-container">
-    <div class="header-border">
-      <h2 class="header-title">El cine en números</h2>
-    </div>
-  </div>
+      <div class="chart-grid">
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 class="chart-title">
+              Number of Movies Produced By Country
+            </h3>
+            <button
+              class="info-button"
+              onClick="showInfoDialog(
+                'Information', 
+                'This is the dialog for chart 1'
+              )"
+            >
+              i
+            </button>
+          </div>
+          <div class="chart-content">
+            {{ choropleth_chart | safe }}
+          </div>
+        </div>
 
-  <div class="chart-grid">
-    <div class="chart-container">
-      <!--
-      <form method="POST">
-          <input type="hidden" name="which_chart" value="sales">
-          <input type="hidden" name="current_profit" value="{{ region_profit }}">
-          <label>Sales Region:</label>
-          <select name="region_sales">
-              <option value="North" {% if region_sales == 'North' %}selected{% endif %}>North</option>
-              <option value="South" {% if region_sales == 'South' %}selected{% endif %}>South</option>
-          </select>
-          <button type="submit">Update Sales</button>
-      </form>
-      -->
-      {{ choropleth_chart | safe }}
+        <div class="chart-container">
+          <div class="chart-header">
+            <h3 class="chart-title">
+              Number of Movies Produced By Country
+            </h3>
+            <button
+              class="info-button"
+              onClick="showInfoDialog(
+                'Information', 
+                'This is the dialog for chart 2'
+              )"
+            >
+              i
+            </button>
+          </div>
+          <div class="chart-content">
+            {{ releases_chart | safe }}
+          </div>
+        </div>
+
+        <div class="chart-container">
+          Aquí va el chart 3
+        </div>
+
+        <div class="chart-container">
+          Aquí va el chart 4
+        </div>
+
+        <div class="chart-container">
+          Aquí va el chart 5
+        </div>
+
+        <div class="chart-container">
+          Aquí va el chart 6
+        </div>
+      </div>
     </div>
-    <div class="chart-container">
-      Aquí va el chart 2
+
+    <div id="infoDialog" class="dialog-overlay">
+      <div class="dialog-content">
+        <button class="close-button" onClick="hideInfoDialog()">&times;</button>
+        <h2 id="dialogTitle" class="dialog-title">Title</h2>
+        <p id="dialogMessage" class="dialog-message">Message goes here</p>
+      </div>
     </div>
-    <div class="chart-container">
-      Aquí va el chart 3
-    </div>
-    <div class="chart-container">
-      Aquí va el chart 4
-    </div>
-    <div class="chart-container">
-      Aquí va el chart 5
-    </div>
-    <div class="chart-container">
-      Aquí va el chart 6
-    </div>
-  </div>
-</div>
-</body>
+
+    <script>
+      // Function to show the dialog with custom content
+      function showInfoDialog(title, message) {
+        document.getElementById('dialogTitle').textContent = title;
+        document.getElementById('dialogMessage').textContent = message;
+        document.getElementById('infoDialog').style.display = 'flex';
+      }
+      
+      function hideInfoDialog() {
+        document.getElementById('infoDialog').style.display = 'none';
+      }
+      
+      document.getElementById('infoDialog').addEventListener('click', function(e) {
+        if (e.target === this) {
+            hideInfoDialog();
+        }
+      });
+      
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            hideInfoDialog();
+        }
+      });
+    </script>
+  </body>
 </html>
