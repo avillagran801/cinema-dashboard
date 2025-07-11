@@ -37,20 +37,3 @@ movies_df['release_date'] = pd.to_datetime(movies_df['release_date'])
 # Generate decade column
 movies_df['decade'] = (movies_df['release_date'].dt.year // 10)*10
 
-def get_top100_revenue_movies():
-
-    df_revenue = movies_df.sort_values(by='revenue', ascending=False)
-    df_revenue = df_revenue.drop(columns=['original_language',
-                                            'overview',
-                                            'production_companies',
-                                            'production_countries',
-                                            'spoken_languages',
-                                            'genres',
-                                            'cast',
-                                            'director'
-                                            ])
-    
-    df_revenue = df_revenue.drop(df_revenue[(df_revenue.vote_average < 1) | (df_revenue.vote_count < 2) | (df_revenue.popularity < 2)].index)
-    top100_revenue_movies = df_revenue.iloc[:100]
-
-    return top100_revenue_movies
