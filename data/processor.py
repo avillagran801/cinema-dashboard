@@ -3,7 +3,10 @@ import numpy as np
 import pycountry
 import os
 
-parts = [pd.read_csv(os.path.join("data", f"TMDB_all_movies_{i+1}.zip")) for i in range(5)]
+parts = [pd.read_csv(os.path.join('data', f"TMDB_all_movies_{i+1}.zip")) for i in range(5)]
+# For testing -------------
+# parts = [pd.read_csv(os.path.join(f"TMDB_all_movies_{i+1}.zip")) for i in range(5)]
+# -------------------------
 movies_df = pd.concat(parts, ignore_index=True)
 
 # Set index as the one used on the csv
@@ -78,3 +81,21 @@ def get_movies_by_country():
   country_count = country_count.dropna(subset=['ISO_Alpha3'])
   
   return country_count
+
+def get_top100_revenue_movies():
+
+    df_revenue = movies_df.sort_values(by='revenue', ascending=False)
+    df_revenue = df_revenue.drop(columns=['original_language',
+                                            'overview',
+                                            'production_companies',
+                                            'production_countries',
+                                            'spoken_languages',
+                                            'genres',
+                                            'cast',
+                                            'director'
+                                            ])
+    
+    df_revenue = df_revenue.drop(df_revenue[(df_revenue.vote_average < 1) | (df_revenue.vote_count < 2) | (df_revenue.popularity < 2)].index)
+    top100_revenue_movies = df_revenue.iloc[:100]
+
+    return top100_revenue_movies
