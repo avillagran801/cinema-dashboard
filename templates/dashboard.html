@@ -51,6 +51,23 @@
               i
             </button>
           </div>
+          <div class="chart2-controls">
+            <select id="selector1">
+              {% for category in category_options %}
+              <option value="{{ category }}" >
+                {{ category }}
+              </option>
+              {% endfor %}
+            </select>
+
+            <select id="selector2">
+              {% for genre in genre_options %}
+              <option value="{{ genre }}" >
+                {{ genre }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
           <div class="chart-content">
             {{ releases_chart | safe }}
           </div>
@@ -74,6 +91,7 @@
       </div>
     </div>
 
+    <!-- Dialog component -->
     <div id="infoDialog" class="dialog-overlay">
       <div class="dialog-content">
         <button class="close-button" onClick="hideInfoDialog()">&times;</button>
@@ -82,6 +100,7 @@
       </div>
     </div>
 
+    <!-- Script to control the dialog and its content -->
     <script>
       // Function to show the dialog with custom content
       function showInfoDialog(title, message) {
