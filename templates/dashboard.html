@@ -97,14 +97,30 @@
           </div>
         </div>
 
-        <!-- Chart 6 -->
         <div class="chart-container">
-          Aquí va el chart 6
+          <div class="chart-header">
+            <h3 class="chart-title">Wordcloud by Genre</h3>
+            <label for="genreWordSelect">Select Genre:</label>
+            <select id="genreWordSelect">
+              {% for genre in wordclouds.keys() %}
+                <option value="{{ genre }}">{{ genre }}</option>
+              {% endfor %}
+            </select>
+            <button class="info-button" onclick="showInfoDialog(
+              'Information', 
+              'These wordclouds show the most common words in movie overviews for the selected genre.'
+            )">i</button>
+          </div>
+          <div class="chart-content">
+            {% for genre, img in wordclouds.items() %}
+              <div class="wordcloud-image" id="wordcloud-{{ genre }}" {% if genre != initial_genre %}style="display: none;"{% endif %}>
+                {{ img | safe }}
+              </div>
+            {% endfor %}
+          </div>
         </div>
-      </div>
-    </div>
 
-    <!-- Dialog component -->
+
     <div id="infoDialog" class="dialog-overlay">
       <div class="dialog-content">
         <button class="close-button" onclick="hideInfoDialog()">&times;</button>
@@ -113,7 +129,6 @@
       </div>
     </div>
 
-    <!-- Script to control the dialog and its content -->
     <script>
       function showInfoDialog(title, message) {
         document.getElementById('dialogTitle').textContent = title;
@@ -147,6 +162,16 @@
         } else if (value === 'directors') {
           document.getElementById('chartDirectors').style.display = 'block';
         }
+      });
+
+      // Selector de género para wordcloud, lo mismo que el de barras, evita recargar la página
+      document.getElementById('genreWordSelect').addEventListener('change', function() {
+        const allClouds = document.getElementsByClassName('wordcloud-image');
+        for (let i = 0; i < allClouds.length; i++) {
+          allClouds[i].style.display = 'none';
+        }
+        const selected = this.value;
+        document.getElementById('wordcloud-' + selected).style.display = 'block';
       });
     </script>
   </body>

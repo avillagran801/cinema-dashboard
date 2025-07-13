@@ -19,10 +19,9 @@ def create_top10_actors_bar():
         x='actor',
         y='num_movies',
         title='Top 10 Actores con más películas',
-        labels={'actor': 'Actor', 'num_movies': 'Número de Películas'},
-        color='num_movies',
-        color_continuous_scale='Viridis'
+        labels={'actor': 'Actor', 'num_movies': 'Número de Películas'}
     )
+
 
     fig.update_layout(
         xaxis_tickangle=-45,
@@ -43,10 +42,14 @@ def create_top10_writers_bar():
     writer_counts.columns = ['writer', 'num_movies']
     top10 = writer_counts.sort_values(by='num_movies', ascending=False).head(10)
 
-    fig = px.bar(top10, x='writer', y='num_movies',
-                 title='Top 10 Escritores con más películas',
-                 labels={'writer': 'Escritor', 'num_movies': 'Número de Películas'},
-                 color='num_movies', color_continuous_scale='Viridis')
+    fig = px.bar(
+        top10,
+        x='writer',
+        y='num_movies',
+        title='Top 10 Escritores con más películas',
+        labels={'writer': 'Escritor', 'num_movies': 'Número de Películas'}
+    )
+
     fig.update_layout(xaxis_tickangle=-45, height=500)
     return pio.to_html(fig, full_html=False)
 
@@ -60,10 +63,14 @@ def create_top10_directors_bar():
     director_counts.columns = ['director', 'num_movies']
     top10 = director_counts.sort_values(by='num_movies', ascending=False).head(10)
 
-    fig = px.bar(top10, x='director', y='num_movies',
-                 title='Top 10 Directores con más películas',
-                 labels={'director': 'Director', 'num_movies': 'Número de Películas'},
-                 color='num_movies', color_continuous_scale='Viridis')
+    fig = px.bar(
+        top10,
+        x='director',
+        y='num_movies',
+        title='Top 10 Directores con más películas',
+        labels={'director': 'Director', 'num_movies': 'Número de Películas'}
+    )
+
     fig.update_layout(xaxis_tickangle=-45, height=500)
     return pio.to_html(fig, full_html=False)
 
