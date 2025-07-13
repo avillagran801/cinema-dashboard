@@ -18,18 +18,13 @@
       <div class="chart-grid">
         <div class="chart-container">
           <div class="chart-header">
-            <h3 class="chart-title">
-              Number of Movies Produced By Country
-            </h3>
-            <button
-              class="info-button"
-              onclick="showInfoDialog(
-                'Information', 
-                'This choropleth map shows the number of movies produced by each country found on the October, 2024 version of '+
-                '<a href=\'https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates\' target=\'_blank\'>The Ultimate 1Million Movies Dataset (TMDB + IMDb)</a>'+
-                '.<br><br> Countries with no known data are displayed as gray.'
-              )"
-            >i</button>
+            <h3 class="chart-title">Number of Movies Produced By Country</h3>
+            <button class="info-button" onclick="showInfoDialog(
+              'Information', 
+              'This choropleth map shows the number of movies produced by each country found on the October, 2024 version of ' +
+              '<a href=\'https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates\' target=\'_blank\'>The Ultimate 1Million Movies Dataset (TMDB + IMDb)</a>.' +
+              '<br><br> Countries with no known data are displayed as gray.'
+            )">i</button>
           </div>
           <div class="chart-content">
             {{ choropleth_chart | safe }}
@@ -38,18 +33,11 @@
 
         <div class="chart-container">
           <div class="chart-header">
-            <h3 class="chart-title">
-              Number of Movies Produced By Year
-            </h3>
-            <button
-              class="info-button"
-              onClick="showInfoDialog(
-                'Information', 
-                'This is the dialog for chart 2'
-              )"
-            >
-              i
-            </button>
+            <h3 class="chart-title">Number of Movies Produced By Year</h3>
+            <button class="info-button" onclick="showInfoDialog(
+              'Information', 
+              'This is the dialog for chart 2'
+            )">i</button>
           </div>
           <div class="chart2-controls">
             <select id="selector1">
@@ -74,17 +62,42 @@
         </div>
 
         <div class="chart-container">
-          Aquí va el chart 3
+          {{ waffle_chart | safe }}
         </div>
 
         <div class="chart-container">
-          Aquí va el chart 4
+          {{ revenue_budget_line_chart | safe }}
         </div>
 
         <div class="chart-container">
-          Aquí va el chart 5
+          <div class="chart-header">
+            <h3 class="chart-title">Top 10 Rankings</h3>
+            <label for="categorySelect">Ver ranking de:</label>
+            <select id="categorySelect">
+              <option value="actors">Actores</option>
+              <option value="writers">Escritores</option>
+              <option value="directors">Directores</option>
+            </select>
+            <button class="info-button" onclick="showInfoDialog(
+              'Information', 
+              'Choose between the top 10 actors, writers, or directors ranked by number of movies.'
+            )">i</button>
+          </div>
+
+          <div class="chart-content">
+            <div id="chartActors">
+              {{ actors_bar_chart | safe }}
+            </div>
+            <div id="chartWriters" style="display:none;">
+              {{ writers_bar_chart | safe }}
+            </div>
+            <div id="chartDirectors" style="display:none;">
+              {{ directors_bar_chart | safe }}
+            </div>
+          </div>
         </div>
 
+        <!-- Chart 6 -->
         <div class="chart-container">
           Aquí va el chart 6
         </div>
@@ -94,7 +107,7 @@
     <!-- Dialog component -->
     <div id="infoDialog" class="dialog-overlay">
       <div class="dialog-content">
-        <button class="close-button" onClick="hideInfoDialog()">&times;</button>
+        <button class="close-button" onclick="hideInfoDialog()">&times;</button>
         <h2 id="dialogTitle" class="dialog-title">Title</h2>
         <div id="dialogMessage" class="dialog-message">Message goes here</div>
       </div>
@@ -102,7 +115,6 @@
 
     <!-- Script to control the dialog and its content -->
     <script>
-      // Function to show the dialog with custom content
       function showInfoDialog(title, message) {
         document.getElementById('dialogTitle').textContent = title;
         document.getElementById('dialogMessage').innerHTML = message;
@@ -112,16 +124,28 @@
       function hideInfoDialog() {
         document.getElementById('infoDialog').style.display = 'none';
       }
-      
+
       document.getElementById('infoDialog').addEventListener('click', function(e) {
-        if (e.target === this) {
-            hideInfoDialog();
-        }
+        if (e.target === this) hideInfoDialog();
       });
-      
+
       document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape') {
-            hideInfoDialog();
+        if (e.key === 'Escape') hideInfoDialog();
+      });
+
+      // Selector de categoría para el gráfico de barras, evita tener que recargar la página
+      document.getElementById('categorySelect').addEventListener('change', function() {
+        document.getElementById('chartActors').style.display = 'none';
+        document.getElementById('chartWriters').style.display = 'none';
+        document.getElementById('chartDirectors').style.display = 'none';
+
+        const value = this.value;
+        if (value === 'actors') {
+          document.getElementById('chartActors').style.display = 'block';
+        } else if (value === 'writers') {
+          document.getElementById('chartWriters').style.display = 'block';
+        } else if (value === 'directors') {
+          document.getElementById('chartDirectors').style.display = 'block';
         }
       });
     </script>
