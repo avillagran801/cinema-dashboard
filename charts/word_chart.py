@@ -1,9 +1,12 @@
+import matplotlib
+matplotlib.use('Agg')
+
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
 import base64
 import io
 from data.word_data import word_data
-
+#lol
 def generate_wordclouds_by_genre():
     """
     Genera un diccionario {genre: HTML img tag} para todos los géneros disponibles.

@@ -5,13 +5,12 @@ from data.bar_data import people_in_movies
 def create_top10_actors_bar():
     df = people_in_movies.copy().reset_index()
     df['cast'] = df['cast'].fillna('')
-
     df_exploded = df.assign(actor=df['cast'].str.split(',')).explode('actor')
     df_exploded['actor'] = df_exploded['actor'].str.strip()
+    df_exploded = df_exploded[df_exploded['actor'] != '']
 
     actor_counts = df_exploded.groupby('actor')['id'].nunique().reset_index()
     actor_counts.columns = ['actor', 'num_movies']
-
     top10_actors = actor_counts.sort_values(by='num_movies', ascending=False).head(10)
 
     fig = px.bar(
@@ -21,15 +20,15 @@ def create_top10_actors_bar():
         title='Top 10 Actores con más películas',
         labels={'actor': 'Actor', 'num_movies': 'Número de Películas'}
     )
-
-
     fig.update_layout(
-        xaxis_tickangle=-45,
         height=500,
+        width=700,
         margin={"r": 20, "t": 50, "l": 20, "b": 100},
+        xaxis_tickangle=-45,
+        xaxis=dict(domain=[0.05, 0.95], automargin=False, title_standoff=10)
     )
-
     return pio.to_html(fig, full_html=False)
+
 
 def create_top10_writers_bar():
     df = people_in_movies.copy().reset_index()
@@ -49,8 +48,13 @@ def create_top10_writers_bar():
         title='Top 10 Escritores con más películas',
         labels={'writer': 'Escritor', 'num_movies': 'Número de Películas'}
     )
-
-    fig.update_layout(xaxis_tickangle=-45, height=500)
+    fig.update_layout(
+        height=500,
+        width=700,
+        margin={"r": 20, "t": 50, "l": 20, "b": 100},
+        xaxis_tickangle=-45,
+        xaxis=dict(domain=[0.05, 0.95], automargin=False, title_standoff=10)
+    )
     return pio.to_html(fig, full_html=False)
 
 
@@ -70,9 +74,11 @@ def create_top10_directors_bar():
         title='Top 10 Directores con más películas',
         labels={'director': 'Director', 'num_movies': 'Número de Películas'}
     )
-
-    fig.update_layout(xaxis_tickangle=-45, height=500)
+    fig.update_layout(
+        height=500,
+        width=700,
+        margin={"r": 20, "t": 50, "l": 20, "b": 100},
+        xaxis_tickangle=-45,
+        xaxis=dict(domain=[0.05, 0.95], automargin=False, title_standoff=10)
+    )
     return pio.to_html(fig, full_html=False)
-
-
-
