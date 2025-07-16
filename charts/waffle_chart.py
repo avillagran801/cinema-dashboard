@@ -19,10 +19,6 @@ def create_waffle():
         FigureClass= Waffle,
         rows = 10,
         values = genre_proportions,
-        title = {
-            'label': 'Revenue-genre proportion of the top 100 highest-grossing movies',
-            'loc': 'center'
-        },
         legend = {
             'loc': 'upper left',
             'bbox_to_anchor': (1, 1)

@@ -27,7 +27,6 @@ def create_line_budget_revenue():
               x='decade',
               y='value',
               color='metric', # Assigns different colors to 'revenue' and 'budget'
-              title='Revenue and Budget Over Decades',
               labels={'value': 'Amount ($)', 'decade': 'Decade', 'metric': 'Metric Type'})
 
     fig.update_layout(hovermode="x unified")

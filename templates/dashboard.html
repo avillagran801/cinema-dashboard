@@ -62,11 +62,33 @@
         </div>
 
         <div class="chart-container">
-          {{ waffle_chart | safe }}
+          <div class="chart-header">
+            <h3 class="chart-title">Revenue-genre proportion of the 100 highest grossing movies</h3>
+            <button class="info-button" onclick="showInfoDialog(
+              'Information', 
+              'This waffle chart show the proportion of genres of the highest grossing movies' +
+              ' This is calculated by the revenue provided by each movie. Therefore, a higher grossing' +
+              ' movie will add more weight to its genre.'
+            )">i</button>
+          </div>
+          <div class="chart-content">
+            {{ waffle_chart | safe }}
+          </div> 
         </div>
 
         <div class="chart-container">
-          {{ revenue_budget_line_chart | safe }}
+          <div class="chart-header">
+            <h3 class="chart-title">Revenue and Budget over the decades</h3>
+            <button class="info-button" onclick="showInfoDialog(
+              'Information', 
+              'This line chart shows the progression of total revenue and total budget of movies ' +
+              'throughout the decades. Keep in mind that the current decade is still ongoing, ' +
+              'and therefore the data is incomplete.'
+            )">i</button>
+          </div>
+          <div class="chart-container">
+            {{ revenue_budget_line_chart | safe }}
+          </div>
         </div>
 
         <div class="chart-container">
