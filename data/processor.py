@@ -29,7 +29,7 @@ def custom_fillna(value):
             return 'null'
     return value
 
-movies_df = movies_df.map(custom_fillna)
+movies_df = movies_df.applymap(custom_fillna)
 
 # Convert release_date column from string to datetime
 movies_df['release_date'] = pd.to_datetime(movies_df['release_date'])
