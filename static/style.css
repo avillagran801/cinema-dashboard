@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     margin: 0;
-    /*padding: 1rem;*/
+    width: 100%;
 }
 
 .header-container {
@@ -76,12 +76,12 @@ body {
   flex: 1;
   font-size: 1.2rem;
   color: #1a1a1a;
-  /*font-weight: 600;*/
 }
 
 .chart-content {
   padding: 0rem 1rem;
   background-color: white;
+  /*border: 5px red solid;*/
 }
 
 .info-button {
@@ -152,4 +152,23 @@ body {
   color: #6096ba;
   text-decoration: none;
   font-weight: bold;
+}
+
+.controls-container {
+  padding: 0rem 1.5rem 1.5rem 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.select-container {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.select-field {
+  display: block;
+  height: 1.5rem;
+  width: 8rem;
 }

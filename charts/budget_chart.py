@@ -31,6 +31,6 @@ def create_line_budget_revenue():
               labels={'value': 'Amount ($)', 'decade': 'Decade', 'metric': 'Metric Type'})
 
     fig.update_layout(hovermode="x unified")
-    fig.show()
+    # fig.show()
 
     return fig.to_html(full_html=False)

@@ -39,22 +39,29 @@
               'This is the dialog for chart 2'
             )">i</button>
           </div>
-          <div class="chart2-controls">
-            <select id="selector1">
-              {% for category in category_options %}
-              <option value="{{ category }}" >
-                {{ category }}
-              </option>
-              {% endfor %}
-            </select>
 
-            <select id="selector2">
-              {% for genre in genre_options %}
-              <option value="{{ genre }}" >
-                {{ genre }}
-              </option>
-              {% endfor %}
-            </select>
+          <div class="controls-container">
+            <div class="select-container">
+              <label for="categorySelector">
+                Select a category:
+              </label>
+
+              <select id="categorySelector" class="select-field">
+                {% for category in category_options %}
+                <option value="{{ category }}" >
+                  {{ category }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="select-container">
+              <label for="optionSelector">
+                Select an option:
+              </label>
+
+              <select id="optionSelector" class="select-field">
+              </select>
+            </div>
           </div>
           <div class="chart-content">
             {{ releases_chart | safe }}
@@ -72,16 +79,23 @@
         <div class="chart-container">
           <div class="chart-header">
             <h3 class="chart-title">Top 10 Rankings</h3>
-            <label for="categorySelect">Ver ranking de:</label>
-            <select id="categorySelect">
-              <option value="actors">Actores</option>
-              <option value="writers">Escritores</option>
-              <option value="directors">Directores</option>
-            </select>
             <button class="info-button" onclick="showInfoDialog(
               'Information', 
               'Choose between the top 10 actors, writers, or directors ranked by number of movies.'
             )">i</button>
+          </div>
+
+          <div class="controls-container">
+            <div class="select-container">
+              <label for="categorySelect">
+                Ver ranking de:
+              </label>
+              <select id="categorySelect" class="select-field">
+                <option value="actors">Actores</option>
+                <option value="writers">Escritores</option>
+                <option value="directors">Directores</option>
+              </select>
+            </div>
           </div>
 
           <div class="chart-content">
@@ -101,22 +115,18 @@
           <div class="chart-header">
             <h3 class="chart-title">Wordcloud by Genre</h3>
             <label for="genreWordSelect">Select Genre:</label>
-            <select id="genreWordSelect">
-              {% for genre in wordclouds.keys() %}
-                <option value="{{ genre }}">{{ genre }}</option>
-              {% endfor %}
-            </select>
+            <!-- 1
+
+            -->
             <button class="info-button" onclick="showInfoDialog(
               'Information', 
               'These wordclouds show the most common words in movie overviews for the selected genre.'
             )">i</button>
           </div>
           <div class="chart-content">
-            {% for genre, img in wordclouds.items() %}
-              <div class="wordcloud-image" id="wordcloud-{{ genre }}" {% if genre != initial_genre %}style="display: none;"{% endif %}>
-                {{ img | safe }}
-              </div>
-            {% endfor %}
+            <!-- 2
+
+            -->
           </div>
         </div>
 
@@ -148,6 +158,9 @@
         if (e.key === 'Escape') hideInfoDialog();
       });
 
+    </script>
+
+    <script>
       // Selector de categoría para el gráfico de barras, evita tener que recargar la página
       document.getElementById('categorySelect').addEventListener('change', function() {
         document.getElementById('chartActors').style.display = 'none';
@@ -165,6 +178,7 @@
       });
 
       // Selector de género para wordcloud, lo mismo que el de barras, evita recargar la página
+      /*
       document.getElementById('genreWordSelect').addEventListener('change', function() {
         const allClouds = document.getElementsByClassName('wordcloud-image');
         for (let i = 0; i < allClouds.length; i++) {
@@ -173,6 +187,36 @@
         const selected = this.value;
         document.getElementById('wordcloud-' + selected).style.display = 'block';
       });
+      */
     </script>
+
+    <script>
+      /* Ignore the syntax error marked by VS Code */
+      const categoryValues = {{ category_values | tojson | safe }};
+    </script>
+
+    <script>
+      const categorySelector = document.getElementById('categorySelector');
+      const optionSelector = document.getElementById('optionSelector');
+
+      function populateOptionSelector(category) {
+        optionSelector.innerHTML = "";
+        const options = categoryValues[category] || ['---'];
+
+        options.forEach(option => {
+          const opt = document.createElement('option');
+          opt.value = option;
+          opt.textContent = option;
+          optionSelector.appendChild(opt);
+        });
+      }
+
+      populateOptionSelector(categorySelector.value);
+
+      categorySelector.addEventListener('change', function () {
+        populateOptionSelector(this.value)
+      });
+    </script>
+
   </body>
 </html>
