@@ -17,8 +17,8 @@ def create_top10_actors_bar():
         top10_actors,
         x='actor',
         y='num_movies',
-        title='Top 10 Actores con más películas',
-        labels={'actor': 'Actor', 'num_movies': 'Número de Películas'}
+        title='Top 10 Actors',
+        labels={'actor': 'Actors', 'num_movies': 'Number of movies'}
     )
     fig.update_layout(
         height=500,
@@ -45,8 +45,8 @@ def create_top10_writers_bar():
         top10,
         x='writer',
         y='num_movies',
-        title='Top 10 Escritores con más películas',
-        labels={'writer': 'Escritor', 'num_movies': 'Número de Películas'}
+        title='Top 10 Writers',
+        labels={'writer': 'Writers', 'num_movies': 'Number of movies'}
     )
     fig.update_layout(
         height=500,
@@ -71,8 +71,8 @@ def create_top10_directors_bar():
         top10,
         x='director',
         y='num_movies',
-        title='Top 10 Directores con más películas',
-        labels={'director': 'Director', 'num_movies': 'Número de Películas'}
+        title='Top 10 Directors',
+        labels={'director': 'Directors', 'num_movies': 'Number of movies'}
     )
     fig.update_layout(
         height=500,
