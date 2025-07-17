@@ -58,41 +58,62 @@
           </div>
         </div>
 
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Revenue-genre proportion of the 100 highest grossing movies</h3>
-            <button class="info-button" onclick="showInfoDialog(
-              'Information', 
-              'This waffle chart show the proportion of genres of the highest grossing movies' +
-              ' This is calculated by the revenue provided by each movie. Therefore, a higher grossing' +
-              ' movie will add more weight to its genre.'
-            )">i</button>
+        <div class="chart-content">
+          <div id="releases-chart-container">
+            {{ releases_chart | safe }}
           </div>
-          <div class="chart-content">
-            {{ waffle_chart | safe }}
-          </div> 
+          <template id="default-releases-chart">
+            {{ releases_chart | safe }}
+          </template>
+        </div>
+      </div>
+
+      <!-- Waffle chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Revenue-genre proportion of the 100 highest grossing movies</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'This waffle chart show the proportion of genres of the highest grossing movies' +
+            ' This is calculated by the revenue provided by each movie. Therefore, a higher grossing' +
+            ' movie will add more weight to its genre.'
+          )">i</button>
+        </div>
+        <div class="chart-content">
+          {{ waffle_chart | safe }}
+        </div> 
+      </div>
+
+      <!-- Revenue vs budget chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Revenue and Budget over the decades</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'This line chart shows the progression of total revenue and total budget of movies ' +
+            'throughout the decades. Keep in mind that the current decade is still ongoing, ' +
+            'and therefore the data is incomplete.'
+          )">i</button>
+        </div>
+        <div class="chart-container">
+          {{ revenue_budget_line_chart | safe }}
+        </div>
+      </div>
+
+      <!-- Top 10 Rankings -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Top 10 entries in the film industry</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'Choose between the top 10 actors, writers, or directors ranked by number of movies.'
+          )">i</button>
         </div>
 
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Revenue and Budget over the decades</h3>
-            <button class="info-button" onclick="showInfoDialog(
-              'Information', 
-              'This line chart shows the progression of total revenue and total budget of movies ' +
-              'throughout the decades. Keep in mind that the current decade is still ongoing, ' +
-              'and therefore the data is incomplete.'
-            )">i</button>
-          </div>
-          <div class="chart-container">
-            {{ revenue_budget_line_chart | safe }}
-          </div>
-        </div>
-
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Top 10 entries in the film industry</h3>
+        <div class="controls-container">
+          <div class="select-container">
             <label for="categorySelect">See ranking of:</label>
-            <select id="categorySelect">
+            <select id="categorySelect" class="select-field">
               <option value="actors">Actors</option>
               <option value="writers">Writers</option>
               <option value="directors">Directors</option>
@@ -101,9 +122,15 @@
         </div>
 
         <div class="chart-content">
-          <div id="chartActors">{{ actors_bar_chart | safe }}</div>
-          <div id="chartWriters" style="display:none;">{{ writers_bar_chart | safe }}</div>
-          <div id="chartDirectors" style="display:none;">{{ directors_bar_chart | safe }}</div>
+          <div id="chartActors">
+            {{ actors_bar_chart | safe }}
+          </div>
+          <div id="chartWriters" style="display:none;">
+            {{ writers_bar_chart | safe }}
+          </div>
+          <div id="chartDirectors" style="display:none;">
+            {{ directors_bar_chart | safe }}
+          </div>
         </div>
       </div>
 
