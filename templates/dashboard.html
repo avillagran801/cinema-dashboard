@@ -1,136 +1,137 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Cinema Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  </head>
-  <body>
-    <div class="container">
-      <div class="header-container">
-        <div class="header-border">
-          <h2 class="header-title">
-            CineMetrics – Data-Driven Cinema Insights
-          </h2>
+<head>
+  <meta charset="UTF-8">
+  <title>Cinema Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <div class="header-container">
+      <div class="header-border">
+        <h2 class="header-title">
+          CineMetrics – Data-Driven Cinema Insights
+        </h2>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <!-- Choropleth -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Number of Movies Produced By Country</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'This choropleth map shows the number of movies produced by each country found on the October, 2024 version of ' +
+            '<a href=\'https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates\' target=\'_blank\'>The Ultimate 1Million Movies Dataset (TMDB + IMDb)</a>.' +
+            '<br><br> Countries with no known data are displayed as gray.'
+          )">i</button>
+        </div>
+        <div class="chart-content">
+          {{ choropleth_chart | safe }}
         </div>
       </div>
 
-      <div class="chart-grid">
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Number of Movies Produced By Country</h3>
-            <button class="info-button" onclick="showInfoDialog(
-              'Information', 
-              'This choropleth map shows the number of movies produced by each country found on the October, 2024 version of ' +
-              '<a href=\'https://www.kaggle.com/datasets/alanvourch/tmdb-movies-daily-updates\' target=\'_blank\'>The Ultimate 1Million Movies Dataset (TMDB + IMDb)</a>.' +
-              '<br><br> Countries with no known data are displayed as gray.'
-            )">i</button>
+      <!-- Releases Chart -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title" id="releasesTitle">Number of Movies Produced By Year</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'This line chart shows the number of movies produced by year. You can filter by genre, language, or country.'
+          )">i</button>
+        </div>
+
+        <div class="controls-container">
+          <div class="select-container">
+            <label for="categorySelector">Select a category:</label>
+            <select id="categorySelector" class="select-field">
+              <option value="">-- Select --</option>
+              {% for category in category_options %}
+                <option value="{{ category }}">{{ category }}</option>
+              {% endfor %}
+            </select>
           </div>
-          <div class="chart-content">
-            {{ choropleth_chart | safe }}
+          <div class="select-container">
+            <label for="optionSelector">Select an option:</label>
+            <select id="optionSelector" class="select-field"></select>
           </div>
         </div>
 
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Number of Movies Produced By Year</h3>
-            <button class="info-button" onclick="showInfoDialog(
-              'Information', 
-              'This is the dialog for chart 2'
-            )">i</button>
-          </div>
-
-          <div class="controls-container">
-            <div class="select-container">
-              <label for="categorySelector">
-                Select a category:
-              </label>
-
-              <select id="categorySelector" class="select-field">
-                {% for category in category_options %}
-                <option value="{{ category }}" >
-                  {{ category }}
-                </option>
-                {% endfor %}
-              </select>
-            </div>
-            <div class="select-container">
-              <label for="optionSelector">
-                Select an option:
-              </label>
-
-              <select id="optionSelector" class="select-field">
-              </select>
-            </div>
-          </div>
-          <div class="chart-content">
+        <div class="chart-content">
+          <div id="releases-chart-container">
             {{ releases_chart | safe }}
           </div>
+          <template id="default-releases-chart">
+            {{ releases_chart | safe }}
+          </template>
+        </div>
+      </div>
+
+      <!-- Other Charts -->
+      <div class="chart-container">{{ waffle_chart | safe }}</div>
+      <div class="chart-container">{{ revenue_budget_line_chart | safe }}</div>
+
+      <!-- Top 10 Rankings -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Top 10 Rankings</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'Choose between the top 10 actors, writers, or directors ranked by number of movies.'
+          )">i</button>
         </div>
 
-        <div class="chart-container">
-          {{ waffle_chart | safe }}
-        </div>
-
-        <div class="chart-container">
-          {{ revenue_budget_line_chart | safe }}
-        </div>
-
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Top 10 Rankings</h3>
-            <button class="info-button" onclick="showInfoDialog(
-              'Information', 
-              'Choose between the top 10 actors, writers, or directors ranked by number of movies.'
-            )">i</button>
-          </div>
-
-          <div class="controls-container">
-            <div class="select-container">
-              <label for="categorySelect">
-                Ver ranking de:
-              </label>
-              <select id="categorySelect" class="select-field">
-                <option value="actors">Actores</option>
-                <option value="writers">Escritores</option>
-                <option value="directors">Directores</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="chart-content">
-            <div id="chartActors">
-              {{ actors_bar_chart | safe }}
-            </div>
-            <div id="chartWriters" style="display:none;">
-              {{ writers_bar_chart | safe }}
-            </div>
-            <div id="chartDirectors" style="display:none;">
-              {{ directors_bar_chart | safe }}
-            </div>
+        <div class="controls-container">
+          <div class="select-container">
+            <label for="categorySelect">Ver ranking de:</label>
+            <select id="categorySelect" class="select-field">
+              <option value="actors">Actores</option>
+              <option value="writers">Escritores</option>
+              <option value="directors">Directores</option>
+            </select>
           </div>
         </div>
 
-        <div class="chart-container">
-          <div class="chart-header">
-            <h3 class="chart-title">Wordcloud by Genre</h3>
+        <div class="chart-content">
+          <div id="chartActors">{{ actors_bar_chart | safe }}</div>
+          <div id="chartWriters" style="display:none;">{{ writers_bar_chart | safe }}</div>
+          <div id="chartDirectors" style="display:none;">{{ directors_bar_chart | safe }}</div>
+        </div>
+      </div>
+
+      <!-- Wordcloud -->
+      <div class="chart-container">
+        <div class="chart-header">
+          <h3 class="chart-title">Wordcloud by Genre</h3>
+          <button class="info-button" onclick="showInfoDialog(
+            'Information', 
+            'These wordclouds show the most common words in movie overviews for the selected genre.'
+          )">i</button>
+        </div>
+
+        <div class="controls-container">
+          <div class="select-container">
             <label for="genreWordSelect">Select Genre:</label>
-            <!-- 1
-
-            -->
-            <button class="info-button" onclick="showInfoDialog(
-              'Information', 
-              'These wordclouds show the most common words in movie overviews for the selected genre.'
-            )">i</button>
-          </div>
-          <div class="chart-content">
-            <!-- 2
-
-            -->
+            <select id="genreWordSelect" class="select-field">
+              {% for genre in wordclouds.keys() %}
+                <option value="{{ genre }}">{{ genre }}</option>
+              {% endfor %}
+            </select>
           </div>
         </div>
 
+        <div class="chart-content">
+          {% for genre, img in wordclouds.items() %}
+            <div class="wordcloud-image" id="wordcloud-{{ genre }}" {% if genre != initial_genre %}style="display: none;"{% endif %}>
+              {{ img | safe }}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
 
+    <!-- Info Dialog -->
     <div id="infoDialog" class="dialog-overlay">
       <div class="dialog-content">
         <button class="close-button" onclick="hideInfoDialog()">&times;</button>
@@ -139,13 +140,14 @@
       </div>
     </div>
 
+    <!-- JavaScript -->
     <script>
       function showInfoDialog(title, message) {
         document.getElementById('dialogTitle').textContent = title;
         document.getElementById('dialogMessage').innerHTML = message;
         document.getElementById('infoDialog').style.display = 'flex';
       }
-      
+
       function hideInfoDialog() {
         document.getElementById('infoDialog').style.display = 'none';
       }
@@ -157,66 +159,177 @@
       document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') hideInfoDialog();
       });
-
     </script>
 
     <script>
-      // Selector de categoría para el gráfico de barras, evita tener que recargar la página
-      document.getElementById('categorySelect').addEventListener('change', function() {
-        document.getElementById('chartActors').style.display = 'none';
-        document.getElementById('chartWriters').style.display = 'none';
-        document.getElementById('chartDirectors').style.display = 'none';
-
-        const value = this.value;
-        if (value === 'actors') {
-          document.getElementById('chartActors').style.display = 'block';
-        } else if (value === 'writers') {
-          document.getElementById('chartWriters').style.display = 'block';
-        } else if (value === 'directors') {
-          document.getElementById('chartDirectors').style.display = 'block';
-        }
-      });
-
-      // Selector de género para wordcloud, lo mismo que el de barras, evita recargar la página
-      /*
-      document.getElementById('genreWordSelect').addEventListener('change', function() {
-        const allClouds = document.getElementsByClassName('wordcloud-image');
-        for (let i = 0; i < allClouds.length; i++) {
-          allClouds[i].style.display = 'none';
-        }
-        const selected = this.value;
-        document.getElementById('wordcloud-' + selected).style.display = 'block';
-      });
-      */
-    </script>
-
-    <script>
-      /* Ignore the syntax error marked by VS Code */
+      // Store both the ISO codes and full names for languages
       const categoryValues = {{ category_values | tojson | safe }};
-    </script>
-
-    <script>
-      const categorySelector = document.getElementById('categorySelector');
-      const optionSelector = document.getElementById('optionSelector');
-
-      function populateOptionSelector(category) {
-        optionSelector.innerHTML = "";
-        const options = categoryValues[category] || ['---'];
-
-        options.forEach(option => {
-          const opt = document.createElement('option');
-          opt.value = option;
-          opt.textContent = option;
-          optionSelector.appendChild(opt);
+      const languageMap = {};
+      
+      // Create a mapping of ISO codes to full names if languages exist
+      if (categoryValues['Language'] && categoryValues['Language'].length > 0) {
+        categoryValues['Language'].forEach(lang => {
+          languageMap[lang.iso] = lang.name;
         });
       }
-
-      populateOptionSelector(categorySelector.value);
-
-      categorySelector.addEventListener('change', function () {
-        populateOptionSelector(this.value)
-      });
     </script>
 
-  </body>
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        // Store references to elements
+        const categorySelector = document.getElementById('categorySelector');
+        const optionSelector = document.getElementById('optionSelector');
+        const defaultReleasesChart = document.getElementById('default-releases-chart').innerHTML;
+        const releasesContainer = document.getElementById('releases-chart-container');
+        
+        // Function to restore default chart
+        function restoreDefaultChart() {
+          document.getElementById('releasesTitle').textContent = "Number of Movies Produced By Year";
+
+          releasesContainer.innerHTML = defaultReleasesChart;
+          // Re-execute any scripts in the chart
+          const scripts = releasesContainer.querySelectorAll('script');
+          scripts.forEach(oldScript => {
+            const newScript = document.createElement('script');
+            newScript.textContent = oldScript.textContent;
+            document.body.appendChild(newScript);
+            document.body.removeChild(newScript);
+          });
+        }
+
+        // Initialize with default chart
+        restoreDefaultChart();
+
+        // Populate option selector based on category
+        function populateOptionSelector(category) {
+          optionSelector.innerHTML = "";
+          let options = categoryValues[category] || [];
+
+          const defaultOption = document.createElement('option');
+          defaultOption.value = '';
+          defaultOption.textContent = '-- Select --';
+          optionSelector.appendChild(defaultOption);
+
+          const isLanguageFormat = options.length > 0 &&
+            typeof options[0] === "object" && "iso" in options[0] && "name" in options[0];
+
+          if (isLanguageFormat) {
+            options.forEach(lang => {
+              const opt = document.createElement('option');
+              opt.value = lang.iso;
+              opt.textContent = lang.name;
+              optionSelector.appendChild(opt);
+            });
+          } else {
+            options.forEach(option => {
+              const opt = document.createElement('option');
+              opt.value = option;
+              opt.textContent = option;
+              optionSelector.appendChild(opt);
+            });
+          }
+
+          optionSelector.value = '';
+        }
+
+        // Update releases chart with filtered data
+        function updateReleasesChart() {
+          const category = categorySelector.value;
+          const selectedValue = optionSelector.value;
+
+          if (!selectedValue || selectedValue === '-- Select --') {
+            restoreDefaultChart();
+            return;
+          }
+
+          const filterTypeMap = {
+            'Genre': 'genre',
+            'Country': 'country',
+            'Language': 'language'
+          };
+
+          const filterType = filterTypeMap[category];
+          if (!filterType) {
+            console.warn("Unknown filter type for category:", category);
+            return;
+          }
+
+          if(filterType == "language") {
+            document.getElementById('releasesTitle').textContent = `Number of Movies Produced By Year (${languageMap[selectedValue]})`;
+          }
+          else {
+            document.getElementById('releasesTitle').textContent = `Number of Movies Produced By Year (${selectedValue})`;
+          }
+
+          releasesContainer.innerHTML = '<div class="loading">Loading chart...</div>';
+
+          fetch(`/get_filtered_releases?filter_type=${filterType}&value=${encodeURIComponent(selectedValue)}`)
+            .then(response => {
+              if (!response.ok) throw new Error(`Network error: ${response.status}`);
+              return response.json();
+            })
+            .then(data => {
+              releasesContainer.innerHTML = data.chart_html;
+              const scripts = releasesContainer.querySelectorAll('script');
+              scripts.forEach(oldScript => {
+                const newScript = document.createElement('script');
+                newScript.textContent = oldScript.textContent;
+                document.body.appendChild(newScript);
+                document.body.removeChild(newScript);
+              });
+            })
+            .catch(error => {
+              console.error("Error fetching chart:", error);
+              releasesContainer.innerHTML = `<div class="error">Error loading chart.</div>`;
+            });
+        }
+
+        // Set up event listeners for releases chart controls
+        if (categorySelector && optionSelector) {
+          if (categorySelector.value) {
+            populateOptionSelector(categorySelector.value);
+          }
+
+          optionSelector.addEventListener('change', updateReleasesChart);
+
+          categorySelector.addEventListener('change', function() {
+            if (!this.value) {
+              optionSelector.innerHTML = '';
+              restoreDefaultChart();
+              return;
+            }
+            populateOptionSelector(this.value);
+            restoreDefaultChart();
+          });
+        }
+
+        // Set up event listeners for top rankings
+        document.getElementById('categorySelect').addEventListener('change', function() {
+          document.getElementById('chartActors').style.display = 'none';
+          document.getElementById('chartWriters').style.display = 'none';
+          document.getElementById('chartDirectors').style.display = 'none';
+
+          const value = this.value;
+          if (value === 'actors') {
+            document.getElementById('chartActors').style.display = 'block';
+          } else if (value === 'writers') {
+            document.getElementById('chartWriters').style.display = 'block';
+          } else if (value === 'directors') {
+            document.getElementById('chartDirectors').style.display = 'block';
+          }
+        });
+
+        // Set up event listeners for wordcloud
+        document.getElementById('genreWordSelect').addEventListener('change', function() {
+          const allClouds = document.getElementsByClassName('wordcloud-image');
+          for (let i = 0; i < allClouds.length; i++) {
+            allClouds[i].style.display = 'none';
+          }
+          const selected = this.value;
+          document.getElementById('wordcloud-' + selected).style.display = 'block';
+        });
+      });
+    </script>
+  </div>
+</body>
 </html>

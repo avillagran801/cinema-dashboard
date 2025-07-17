@@ -1,8 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  width: 100%;
+}
+
+.container {
+  width: 100%;
 }
 
 .header-container {
@@ -171,4 +175,11 @@ body {
   display: block;
   height: 1.5rem;
   width: 8rem;
+}
+
+.loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

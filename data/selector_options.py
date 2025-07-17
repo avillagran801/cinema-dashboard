@@ -1,5 +1,5 @@
 import pandas as pd
-import numpy as np
+from langcodes import Language
 from data.processor import movies_df
 
 def _get_genres():
@@ -22,5 +22,14 @@ def _get_countries():
 
   return countries
 
+def _get_languages():
+  languages = movies_df['original_language']
+  languages = languages.unique().tolist()
+  languages = [ {'iso': x, 'name': Language.get(x).display_name() if x != 'cn' else 'Chinese'} for x in languages if x != 'xx']
+  languages = sorted(languages, key=lambda x: x['name'])
+
+  return languages
+
 genres_list = _get_genres()
 countries_list = _get_countries()
+languages_list = _get_languages()

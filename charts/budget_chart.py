@@ -6,11 +6,11 @@ def create_line_budget_revenue():
 
     decade_revenue = movies_df.groupby('decade')['revenue'].sum().reset_index(name="revenue")
     decade_revenue = decade_revenue.sort_values('decade')
-    print(decade_revenue.head(5))
+    # print(decade_revenue.head(5))
 
     decade_budget = movies_df.groupby('decade')['budget'].sum().reset_index(name="budget")
     decade_budget = decade_budget.sort_values('decade')
-    print(decade_budget.head(5))
+    # print(decade_budget.head(5))
 
     decade_budget = decade_budget.drop(columns='decade')
 
