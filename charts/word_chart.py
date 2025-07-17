@@ -21,7 +21,12 @@ def generate_wordclouds_by_genre():
         text = " ".join(word_data[word_data['genres'] == genre]['overview'])
 
         # Generar wordcloud
-        wc = WordCloud(width=800, height=400, background_color='white').generate(text)
+        wc = WordCloud(
+            width=800,
+            height=400,
+            background_color='white',
+            prefer_horizontal=0.8,
+        ).generate(text)
 
         # Convertir en imagen base64
         img_io = io.BytesIO()
@@ -29,7 +34,11 @@ def generate_wordclouds_by_genre():
         plt.imshow(wc, interpolation='bilinear')
         plt.axis('off')
         plt.tight_layout()
-        plt.savefig(img_io, format='png')
+        plt.savefig(
+            img_io,
+            format='png',
+            bbox_inches='tight'
+        )
         plt.close()
 
         img_io.seek(0)

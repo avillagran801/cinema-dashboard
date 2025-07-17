@@ -80,7 +80,9 @@
           )">i</button>
         </div>
         <div class="chart-content">
-          {{ waffle_chart | safe }}
+          <div class="waffle-chart">
+            {{ waffle_chart | safe }}
+          </div>
         </div> 
       </div>
 
@@ -197,6 +199,7 @@
 
     <script>
       // Store both the ISO codes and full names for languages
+      // VS CODE MIGHT SHOW AN ERROR HERE, BUT IT'S NOT AN ACTUAL ERROR
       const categoryValues = {{ category_values | tojson | safe }};
       const languageMap = {};
       
